@@ -1,0 +1,54 @@
+# --- General OS & IDE ---
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# --- Backend (Python / FastAPI / SQLAlchemy) ---
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
+# Python Virtual Environments
+**/.venv/
+**/venv/
+**/env/
+**/ENV/
+
+# Database files (SQLAlchemy / SQLite)
+**/*.db
+**/*.sqlite3
+
+# Distribution / packaging
+**/dist/
+**/build/
+**/*.egg-info/
+
+# Environment files
+**/.env
+**/.env.*
+!**/.env.example
+
+# --- Frontend (Node.js / React) ---
+# Dependencies
+**/node_modules/
+**/jspm_packages/
+
+# Production Build
+**/frontend/build/
+**/frontend/dist/
+**/frontend/out/
+
+# Debug logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
+
+# Testing
+**/coverage/
+
+# Misc
+.DS_Store
