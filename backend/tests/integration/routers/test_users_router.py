@@ -2,15 +2,12 @@
 Integration tests for the /api/v1/users router.
 
 Uses FastAPI's TestClient backed by a real (containerised) PostgreSQL
-database through the `test_client` fixture in conftest.py.  Each test
+database through the `test_client` fixture in conftest.py. Each test
 is isolated via a rolled-back transaction.
 
-Known quirks in the current implementation that these tests intentionally
-document (rather than paper over):
-  - GET /{user_id} returns HTTP 201 instead of 200.
-  - POST /{user_id} (update) with a non-existent user returns HTTP 500
-    because UserService.update_user() calls model_validate(None) before
-    the None-check in the router runs.
+These tests document the current API behavior:
+  - GET /{user_id} returns HTTP 200 on success.
+  - POST /{user_id} (update) with a non-existent user returns HTTP 404.
 """
 import pytest
 
