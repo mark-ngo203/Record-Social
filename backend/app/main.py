@@ -1,13 +1,11 @@
-import sys
 import logging
-import signal
-import uvicorn
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from pythonjsonlogger.json import JsonFormatter
 
 from app.db.database import init_db
+from app.api.v1.api import api_router
 
 # Setup logging
 logger = logging.getLogger()
@@ -32,11 +30,8 @@ async def lifespan(app: FastAPI):
     # 2. Shutdown: Run right before the app stops
     logger.info("Shutting down: Cleaning up resources...")
 
+# Create FASTAPI app that executes lifespan before the server starts
 app = FastAPI(title="Record Social", lifespan=lifespan)
 
-def serve():
-    # Start the actual server
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
-if __name__ == "__main__":
-    serve()
+# Add router to api endpoints
+app.include_router(api_router, prefix="/api/v1")
