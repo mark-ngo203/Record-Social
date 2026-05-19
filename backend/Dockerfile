@@ -15,9 +15,9 @@ COPY --from=ghcr.io/astral-sh/uv:0.9.21 /uv /uvx /bin/
 COPY pyproject.toml README.md uv.lock* ./
 
 # Sync the project dependencies
-RUN uv sync --frozen
+RUN uv sync --frozen --no-dev
 
 COPY . .
 
 # Run the application
-CMD ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload"]
+CMD ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0"]

@@ -20,7 +20,7 @@ class UserService():
             logger.info("Created user", extra={"user id": user.id, "username": user.username, "created at": user.created_at})
             user_response = UserResponse.model_validate(user)
 
-            return user_response.model_validate(user)
+            return user_response
         except IntegrityError as e:
             self.repo.db.rollback()
             logger.warning("Username already exists", extra={"error": str(e)})
