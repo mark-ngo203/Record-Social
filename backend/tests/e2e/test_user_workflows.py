@@ -67,7 +67,7 @@ class TestCreateUpdateRetrieveWorkflow:
 
     def test_update_is_reflected_on_subsequent_get(self, test_client):
         created = test_client.post(f"{BASE}/", json={"username": "before_update"}).json()
-        test_client.post(
+        test_client.put(
             f"{BASE}/{created['id']}", json={"username": "after_update"}
         )
 
@@ -78,7 +78,7 @@ class TestCreateUpdateRetrieveWorkflow:
         created = test_client.post(f"{BASE}/", json={"username": "stable_id"}).json()
         original_id = created["id"]
 
-        test_client.post(f"{BASE}/{original_id}", json={"username": "stable_id_v2"})
+        test_client.put(f"{BASE}/{original_id}", json={"username": "stable_id_v2"})
 
         fetched = test_client.get(f"{BASE}/{original_id}").json()
         assert fetched["id"] == original_id
@@ -87,7 +87,7 @@ class TestCreateUpdateRetrieveWorkflow:
         u1 = test_client.post(f"{BASE}/", json={"username": "isolated_one"}).json()
         u2 = test_client.post(f"{BASE}/", json={"username": "isolated_two"}).json()
 
-        test_client.post(f"{BASE}/{u1['id']}", json={"username": "isolated_one_v2"})
+        test_client.put(f"{BASE}/{u1['id']}", json={"username": "isolated_one_v2"})
 
         u2_fetched = test_client.get(f"{BASE}/{u2['id']}").json()
         assert u2_fetched["username"] == "isolated_two"
@@ -96,15 +96,15 @@ class TestCreateUpdateRetrieveWorkflow:
         created = test_client.post(f"{BASE}/", json={"username": "seq_update"}).json()
         uid = created["id"]
 
-        test_client.post(f"{BASE}/{uid}", json={"username": "seq_updatev2"})
-        test_client.post(f"{BASE}/{uid}", json={"username": "seq_updatev3"})
+        test_client.put(f"{BASE}/{uid}", json={"username": "seq_updatev2"})
+        test_client.put(f"{BASE}/{uid}", json={"username": "seq_updatev3"})
 
         fetched = test_client.get(f"{BASE}/{uid}").json()
         assert fetched["username"] == "seq_updatev3"
 
     def test_updated_at_timestamp_is_present(self, test_client):
         created = test_client.post(f"{BASE}/", json={"username": "ts_user"}).json()
-        update_resp = test_client.post(
+        update_resp = test_client.put(
             f"{BASE}/{created['id']}", json={"username": "ts_user_v2"}
         ).json()
 
@@ -183,7 +183,7 @@ class TestDatabaseConsistency:
 
         created = test_client.post(f"{BASE}/", json={"username": "db_before"}).json()
         uid = created["id"]
-        test_client.post(f"{BASE}/{uid}", json={"username": "db_after"})
+        test_client.put(f"{BASE}/{uid}", json={"username": "db_after"})
         db_session.expire_all()
 
         user_in_db = db_session.query(User).filter_by(id=uid).first()

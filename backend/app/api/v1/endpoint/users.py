@@ -29,7 +29,7 @@ def get_user(user_id: int, db=Depends(get_db)):
     except UserNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-@router.post("/{user_id}", status_code=200)
+@router.put("/{user_id}", status_code=200)
 def update_user(user_id: int, user: UserUpdateRequest, db=Depends(get_db)):
     try:
         service = UserService(UserRepository(db))

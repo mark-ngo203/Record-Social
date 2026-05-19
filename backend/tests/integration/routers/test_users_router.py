@@ -131,42 +131,42 @@ class TestUpdateUser:
 
     def test_returns_200_on_success(self, test_client):
         created = test_client.post(f"{BASE}/", json={"username": "dave"}).json()
-        resp = test_client.post(
+        resp = test_client.put(
             f"{BASE}/{created['id']}", json={"username": "daveupdated"}
         )
         assert resp.status_code == 200
 
     def test_response_reflects_new_username(self, test_client):
         created = test_client.post(f"{BASE}/", json={"username": "eve"}).json()
-        resp = test_client.post(
+        resp = test_client.put(
             f"{BASE}/{created['id']}", json={"username": "eveupdated"}
         )
         assert resp.json()["username"] == "eveupdated"
 
     def test_response_preserves_id(self, test_client):
         created = test_client.post(f"{BASE}/", json={"username": "frank"}).json()
-        resp = test_client.post(
+        resp = test_client.put(
             f"{BASE}/{created['id']}", json={"username": "frankupdated"}
         )
         assert resp.json()["id"] == created["id"]
 
     def test_response_contains_updated_at(self, test_client):
         created = test_client.post(f"{BASE}/", json={"username": "grace"}).json()
-        resp = test_client.post(
+        resp = test_client.put(
             f"{BASE}/{created['id']}", json={"username": "graceupdated"}
         )
         assert "updated_at" in resp.json()
 
     def test_new_username_too_short_returns_422(self, test_client):
         created = test_client.post(f"{BASE}/", json={"username": "henry"}).json()
-        resp = test_client.post(
+        resp = test_client.put(
             f"{BASE}/{created['id']}", json={"username": "hi"}
         )
         assert resp.status_code == 422
 
     def test_new_username_too_long_returns_422(self, test_client):
         created = test_client.post(f"{BASE}/", json={"username": "ivan"}).json()
-        resp = test_client.post(
+        resp = test_client.put(
             f"{BASE}/{created['id']}", json={"username": "a" * 21}
         )
         assert resp.status_code == 422
@@ -174,7 +174,7 @@ class TestUpdateUser:
     def test_nonexistent_user_returns_error(self, test_client):
         # update_user on a nonexistent id → service crashes with a Pydantic
         # ValidationError before the router's None-check is reached → 404.
-        resp = test_client.post(
+        resp = test_client.put(
             f"{BASE}/999999", json={"username": "ghost"}
         )
         assert resp.status_code == 404

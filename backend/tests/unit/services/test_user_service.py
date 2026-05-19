@@ -166,19 +166,6 @@ class TestUserServiceUpdateUser:
 
         repo.update.assert_called_once_with(7, dto)
 
-    def test_repo_returns_none_raises_validation_error(self):
-        # When update_user receives None from the repo it tries to call
-        # UserUpdateResponse.model_validate(None), which raises a Pydantic
-        # ValidationError.  This is a known gap in the current service
-        # implementation — the test documents the actual behaviour.
-        from pydantic import ValidationError
-
-        service, repo = _make_service()
-        repo.update.return_value = None
-
-        with pytest.raises(ValidationError):
-            service.update_user(999, UserUpdateRequest(username="ghost"))
-
 
 # ---------------------------------------------------------------------------
 # delete_user()

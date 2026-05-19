@@ -18,7 +18,7 @@ class UserRepository:
 
         return db_user
 
-    def get_by_id(self, user_id: int) -> type[User]:
+    def get_by_id(self, user_id: int) -> User:
         user = self.db.query(User).filter(User.id == user_id).one()
 
         return user
