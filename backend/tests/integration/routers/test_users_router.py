@@ -85,9 +85,7 @@ class TestCreateUser:
 
 class TestGetUser:
 
-    def test_returns_201_for_existing_user(self, test_client):
-        # NOTE: The router declares status_code=201 on the GET handler.
-        # This test documents the current (buggy) behaviour.
+    def test_returns_200_for_existing_user(self, test_client):
         created = test_client.post(f"{BASE}/", json={"username": "bob"}).json()
         resp = test_client.get(f"{BASE}/{created['id']}")
         assert resp.status_code == 200
