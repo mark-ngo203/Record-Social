@@ -1,4 +1,3 @@
-from typing import Optional
 import logging
 
 from sqlalchemy.exc import IntegrityError, NoResultFound
@@ -14,7 +13,7 @@ class UserService():
     def __init__(self, repo: UserRepository):
         self.repo = repo
 
-    def create_user(self, user_dto: UserCreateRequest) -> Optional[UserResponse]:
+    def create_user(self, user_dto: UserCreateRequest) -> UserResponse:
         try:
             user = self.repo.create(user_dto)
             logger.info("Created user", extra={"user id": user.id, "username": user.username, "created at": user.created_at})
@@ -26,7 +25,7 @@ class UserService():
             logger.warning("Username already exists", extra={"error": str(e)})
             raise DuplicateUsernameException(user_dto.username)
 
-    def get_user(self, user_id: int) -> Optional[UserResponse]:
+    def get_user(self, user_id: int) -> UserResponse:
         try:
             user = self.repo.get_by_id(user_id)
             logger.info("Retrieved user", extra={"user id": user.id, "username": user.username, "created at": user.created_at})
@@ -37,7 +36,7 @@ class UserService():
             logger.warning("User not found", extra={"user id": user_id})
             raise UserNotFoundError(user_id)
 
-    def update_user(self, user_id: int, user_dto: UserUpdateRequest) -> Optional[UserUpdateResponse]:
+    def update_user(self, user_id: int, user_dto: UserUpdateRequest) -> UserUpdateResponse:
         try:
             user = self.repo.update(user_id, user_dto)
             logger.info("Updated user", extra={"user id": user.id, "username": user.username, "updated at": user.updated_at})
