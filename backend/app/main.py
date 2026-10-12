@@ -1,11 +1,11 @@
 import logging
-
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from pythonjsonlogger.json import JsonFormatter
 
-from app.db.database import init_db
 from app.api.v1.api import api_router
+from app.db.database import init_db
 
 # Setup logging
 logger = logging.getLogger()

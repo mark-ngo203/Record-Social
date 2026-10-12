@@ -11,6 +11,10 @@ Thumbs.db
 **/*.py[cod]
 **/*$py.class
 
+# Tool caches
+**/.pytest_cache/
+**/.ruff_cache/
+
 # Python Virtual Environments
 **/.venv/
 **/venv/

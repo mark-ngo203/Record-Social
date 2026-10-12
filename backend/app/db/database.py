@@ -1,6 +1,8 @@
 import logging
+
 from sqlalchemy import create_engine, inspect
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
+
 from app.core.config import config
 
 logger = logging.getLogger("database")
@@ -20,14 +22,6 @@ def get_db():
         db.close()
 
 def init_db():
-    from app.models.album import Album
-    from app.models.group import Group
-    from app.models.group_user import GroupUser
-    from app.models.user import User
-    from app.models.candidate_pool import CandidatePool
-    from app.models.group_album_history import GroupAlbumHistory
-    from app.models.album_vote import AlbumVote
-    from app.models.group_user_album_history import GroupUserAlbumHistory
 
     logger.info("Initializing database...")
 

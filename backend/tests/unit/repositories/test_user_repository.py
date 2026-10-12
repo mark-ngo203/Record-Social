@@ -11,7 +11,6 @@ from sqlalchemy.exc import IntegrityError, NoResultFound
 from app.repositories.user_repository import UserRepository
 from app.schemas.user_dto import UserCreateRequest, UserUpdateRequest
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -240,7 +239,7 @@ class TestUserRepositoryRelationships:
         assert user.groups == []
 
     def test_user_can_belong_to_multiple_groups(self, db_session):
-        from tests.factories import make_user, make_group, make_group_user
+        from tests.factories import make_group, make_group_user, make_user
 
         user = make_user(db_session, username="quinn")
         g1 = make_group(db_session, name="groupA")
@@ -252,8 +251,8 @@ class TestUserRepositoryRelationships:
         assert len(user.groups) == 2
 
     def test_deleting_user_cascades_group_user(self, db_session):
-        from tests.factories import make_user, make_group, make_group_user
         from app.models.group_user import GroupUser
+        from tests.factories import make_group, make_group_user, make_user
 
         user = make_user(db_session, username="rose")
         group = make_group(db_session, name="roses_group")

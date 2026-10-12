@@ -7,7 +7,6 @@ backs the `test_client` fixture.  They confirm that the system behaves
 correctly as a whole — not just that individual endpoints return the right
 status codes.
 """
-import pytest
 
 BASE = "/api/v1/users"
 
@@ -221,7 +220,6 @@ class TestRelationshipWorkflows:
 
     def test_user_can_be_added_to_group(self, test_client, db_session):
         from tests.factories import make_group, make_group_user
-        from app.models.group_user import GroupUser
 
         # Create user via API
         resp = test_client.post(f"{BASE}/", json={"username": "group_member"}).json()
@@ -240,9 +238,9 @@ class TestRelationshipWorkflows:
     def test_user_with_group_memberships_deleted_cleans_junction(
         self, test_client, db_session
     ):
-        from tests.factories import make_group, make_group_user
         from app.models.group_user import GroupUser
         from app.models.user import User
+        from tests.factories import make_group, make_group_user
 
         resp = test_client.post(f"{BASE}/", json={"username": "cleanup_user"}).json()
         uid = resp["id"]
@@ -264,7 +262,7 @@ class TestRelationshipWorkflows:
         assert leftover == []
 
     def test_candidate_pool_references_album_and_group(self, db_session):
-        from tests.factories import make_album, make_group, make_candidate_pool
+        from tests.factories import make_album, make_candidate_pool, make_group
 
         album = make_album(db_session, title="Pool Album")
         group = make_group(db_session, name="pool_group")
@@ -275,8 +273,8 @@ class TestRelationshipWorkflows:
         assert cp.group_id == group.id
 
     def test_group_album_history_composite_key(self, db_session):
-        from tests.factories import make_album, make_group, make_group_album_history
         from app.models.group_album_history import GroupAlbumHistory
+        from tests.factories import make_album, make_group, make_group_album_history
 
         album = make_album(db_session, title="History Album")
         group = make_group(db_session, name="history_group")

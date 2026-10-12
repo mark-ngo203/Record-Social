@@ -1,12 +1,14 @@
-from typing import TYPE_CHECKING
 import datetime as dt
-from sqlalchemy.orm import mapped_column, Mapped, relationship
+from typing import TYPE_CHECKING
+
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.db.database import Base
 
 if TYPE_CHECKING:
-    from .group_user import GroupUser
     from .candidate_pool import CandidatePool
     from .group_album_history import GroupAlbumHistory
+    from .group_user import GroupUser
 
 class Group(Base):
 
@@ -19,6 +21,6 @@ class Group(Base):
     created_at: Mapped[dt.datetime] = mapped_column(default=dt.datetime.now(dt.timezone.utc))
     updated_at: Mapped[dt.datetime] = mapped_column(default=dt.datetime.now(dt.timezone.utc), onupdate=dt.datetime.now(dt.timezone.utc))
 
-    members: Mapped[list["GroupUser"]] = relationship(back_populates="group")
+    members: Mapped[list["GroupUser"]] = relationship(back_populates="group", cascade="all, delete-orphan")
     candidates: Mapped[list["CandidatePool"]] = relationship(back_populates="group")
     history: Mapped[list["GroupAlbumHistory"]] = relationship(back_populates="group")

@@ -3,9 +3,13 @@ from fastapi import APIRouter, Depends, HTTPException
 from app.db.database import get_db
 from app.exceptions.user_exceptions import DuplicateUsernameException, UserNotFoundError
 from app.repositories.user_repository import UserRepository
-from app.schemas.user_dto import UserCreateRequest, UserUpdateRequest, UserResponse, UserUpdateResponse
+from app.schemas.user_dto import (
+    UserCreateRequest,
+    UserResponse,
+    UserUpdateRequest,
+    UserUpdateResponse,
+)
 from app.services.user_service import UserService
-
 
 router = APIRouter()
 
@@ -48,6 +52,6 @@ def delete_user(user_id: int, db=Depends(get_db)) -> None:
         service = UserService(UserRepository(db))
         service.delete_user(user_id)
 
-        return None
+        return
     except UserNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))

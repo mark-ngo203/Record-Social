@@ -10,14 +10,13 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from app.services.user_service import UserService
 from app.schemas.user_dto import (
     UserCreateRequest,
-    UserUpdateRequest,
     UserResponse,
+    UserUpdateRequest,
     UserUpdateResponse,
 )
-
+from app.services.user_service import UserService
 
 # ---------------------------------------------------------------------------
 # Helpers

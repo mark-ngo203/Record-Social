@@ -6,15 +6,15 @@ All factories accept a `db` (SQLAlchemy Session) as the first argument so
 they work with the transactional `db_session` fixture in conftest.py.
 """
 import datetime as dt
+
 from sqlalchemy.orm import Session
 
-from app.models.user import User
-from app.models.group import Group
 from app.models.album import Album
-from app.models.group_user import GroupUser
 from app.models.candidate_pool import CandidatePool
+from app.models.group import Group
 from app.models.group_album_history import GroupAlbumHistory
-
+from app.models.group_user import GroupUser
+from app.models.user import User
 
 _user_counter = 0
 _group_counter = 0

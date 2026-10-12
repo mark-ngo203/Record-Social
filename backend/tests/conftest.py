@@ -16,26 +16,26 @@ os.environ.setdefault("DB_HOST", "localhost")
 os.environ.setdefault("DB_PORT", "5432")
 os.environ.setdefault("POSTGRES_DB", "test")
 
-import pytest
 from unittest.mock import patch
+
+import pytest
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from testcontainers.postgres import PostgresContainer
-from fastapi.testclient import TestClient
 
 from app.db.database import Base, get_db
 from app.main import app
+from app.models.album import Album  # noqa: F401
+from app.models.album_vote import AlbumVote  # noqa: F401
+from app.models.candidate_pool import CandidatePool  # noqa: F401
+from app.models.group import Group  # noqa: F401
+from app.models.group_album_history import GroupAlbumHistory  # noqa: F401
+from app.models.group_user import GroupUser  # noqa: F401
+from app.models.group_user_album_history import GroupUserAlbumHistory  # noqa: F401
 
 # Register all models with Base.metadata before create_all is called.
 from app.models.user import User  # noqa: F401
-from app.models.group import Group  # noqa: F401
-from app.models.album import Album  # noqa: F401
-from app.models.group_user import GroupUser  # noqa: F401
-from app.models.album_vote import AlbumVote  # noqa: F401
-from app.models.candidate_pool import CandidatePool  # noqa: F401
-from app.models.group_album_history import GroupAlbumHistory  # noqa: F401
-from app.models.group_user_album_history import GroupUserAlbumHistory  # noqa: F401
-
 
 # ---------------------------------------------------------------------------
 # Session-scoped: one PostgreSQL container + schema for the entire test run.

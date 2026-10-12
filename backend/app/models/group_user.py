@@ -1,11 +1,13 @@
 from typing import TYPE_CHECKING
+
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.db.database import Base
 
 if TYPE_CHECKING:
-    from .user import User
     from .group import Group
+    from .user import User
 
 class GroupUser(Base):
 

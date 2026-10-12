@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from app.schemas.user_dto import UserCreateRequest, UserUpdateRequest
 from app.models.user import User
+from app.schemas.user_dto import UserCreateRequest, UserUpdateRequest
 
 
 class UserRepository:

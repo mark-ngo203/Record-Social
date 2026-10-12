@@ -1,7 +1,9 @@
-from typing import Optional, TYPE_CHECKING
+import datetime as dt
+from typing import TYPE_CHECKING
+
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-import datetime as dt
+
 from app.db.database import Base
 
 if TYPE_CHECKING:
@@ -17,9 +19,9 @@ class User(Base):
     # Authentication fields
     username: Mapped[str] = mapped_column(unique=True, index=True)
     # Will be incorporated in future updates
-    password_hash: Mapped[Optional[str]]
+    password_hash: Mapped[str | None]
 
-    email: Mapped[Optional[str]] = mapped_column(unique=True, index=True)
+    email: Mapped[str | None] = mapped_column(unique=True, index=True)
 
     role: Mapped[str] = mapped_column(String(50), default="user")
 

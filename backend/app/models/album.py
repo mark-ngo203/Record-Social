@@ -1,6 +1,8 @@
-from typing import TYPE_CHECKING
 import datetime as dt
-from sqlalchemy.orm import mapped_column, Mapped, relationship
+from typing import TYPE_CHECKING
+
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.db.database import Base
 
 if TYPE_CHECKING:

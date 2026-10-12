@@ -1,11 +1,8 @@
-from typing import TYPE_CHECKING
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.db.database import Base
 
-if TYPE_CHECKING:
-    from .group_user import GroupUser
-    from .candidate_pool import CandidatePool
+from sqlalchemy import ForeignKeyConstraint
+from sqlalchemy.orm import Mapped, mapped_column
+
+from app.db.database import Base
 
 
 class AlbumVote(Base):

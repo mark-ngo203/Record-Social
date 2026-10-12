@@ -4,12 +4,16 @@ from sqlalchemy.exc import IntegrityError, NoResultFound
 
 from app.exceptions.user_exceptions import DuplicateUsernameException, UserNotFoundError
 from app.repositories.user_repository import UserRepository
-from app.schemas.user_dto import UserCreateRequest, UserResponse, UserUpdateRequest, UserUpdateResponse
-
+from app.schemas.user_dto import (
+    UserCreateRequest,
+    UserResponse,
+    UserUpdateRequest,
+    UserUpdateResponse,
+)
 
 logger = logging.getLogger("user_service")
 
-class UserService():
+class UserService:
     def __init__(self, repo: UserRepository):
         self.repo = repo
 
