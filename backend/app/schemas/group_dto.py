@@ -19,6 +19,16 @@ class GroupCreateResponse(BaseModel):
 
     model_config = {"from_attributes": True}
 
+class GroupResponse(BaseModel):
+    id: int
+    owner_id: int
+    name: str
+    max_members: int
+    album_event_duration: Literal["weekly", "bi-weekly", "monthly"]
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
 class GroupUpdateRequest(BaseModel):
     name: str | None = Field(default=None, min_length=5, max_length=20)
     new_owner_id: int | None = None

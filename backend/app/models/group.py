@@ -1,6 +1,7 @@
 import datetime as dt
 from typing import TYPE_CHECKING
 
+from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.database import Base
@@ -17,6 +18,10 @@ class Group(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
 
     name: Mapped[str] = mapped_column(unique=True, index=True)
+
+    owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    max_members: Mapped[int] = mapped_column()
+    album_event_duration: Mapped[str] = mapped_column(String(20))
 
     created_at: Mapped[dt.datetime] = mapped_column(default=dt.datetime.now(dt.timezone.utc))
     updated_at: Mapped[dt.datetime] = mapped_column(default=dt.datetime.now(dt.timezone.utc), onupdate=dt.datetime.now(dt.timezone.utc))
